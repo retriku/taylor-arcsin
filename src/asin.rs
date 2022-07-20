@@ -29,7 +29,6 @@ pub fn arcsine_as_sum(x: f64, epsilon: f64) -> f64 {
         n4 *= 4.0;
         xn *= x;
     }
-    println!("result reached in {} steps", n);
 
     return arcsin;
 }
