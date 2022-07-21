@@ -3,7 +3,7 @@ use std::time::Instant;
 
 mod asin;
 
-const EPSILON: f64 = 1e-10;
+const EPSILON: f64 = 1e-1;
 const CHECK_TRIES: u32 = 10_000;
 const LOAD_TRIES: u64 = 10_000_000;
 
@@ -21,9 +21,16 @@ fn check_correctness(rng: &mut ThreadRng) -> bool {
             let a = x.asin();
             let b = asin::arcsine_as_sum(x, EPSILON);
 
-            (a - b).abs()
+            (x, a, b, (a - b).abs())
         })
-        .all(|x: f64| x < EPSILON)
+        .all(|(x,a,b,r)| {
+            if r < EPSILON {
+                true
+            } else {
+                println!("asin({x}) = {a}, but calculated as {b}, diff is {r}", x = x, a = a, b = b, r = r);
+                false
+            }
+        })
 }
 
 fn check_speed(rng: &mut ThreadRng) {
@@ -39,7 +46,7 @@ fn check_speed(rng: &mut ThreadRng) {
     let t_end = Instant::now();
     let duration = t_end.duration_since(t_start);
 
-    let cps = LOAD_TRIES as f64 / duration.as_secs() as f64;
+    let cps = LOAD_TRIES as f64 / duration.as_secs_f64();
     println!("Calls per second: {}", cps);
     // println!("Processing of load took: {:?}", duration);
 }
