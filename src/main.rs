@@ -3,7 +3,7 @@ use std::time::Instant;
 
 mod asin;
 
-const EPSILON: f64 = 1e-1;
+const EPSILON: f64 = 1e-10;
 const CHECK_TRIES: u32 = 10_000;
 const LOAD_TRIES: u64 = 10_000_000;
 

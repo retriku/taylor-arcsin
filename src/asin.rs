@@ -1,9 +1,5 @@
 fn nn_fact_div_n_fact_squared(n: i32) -> f64 {
-    if n == 0 {
-        0.0
-    } else {
-        (1..n).fold(2.0, |acc, i| acc * (((n + i) as f64) / i as f64))
-    }
+    (1..n).fold(2.0, |acc, i| acc * (((n + i) as f64) / i as f64))
 }
 
 pub fn arcsine_as_sum(x: f64, epsilon: f64) -> f64 {
